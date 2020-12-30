@@ -1,0 +1,32 @@
+---
+
+- name: Copy CoreOS image to the webserver htdocs
+  copy:
+    src: /root/assets/rhcos/rhcos-live-rootfs.ppc64le.img
+    dest: /var/www/html/rhcos-live-rootfs.ppc64le.img
+    remote_src: yes
+
+- name: Generate GRUB resources
+  command: grub2-mknetdir --net-directory=/var/lib/tftpboot
+
+- name: Copy kernel
+  copy:
+    src: /root/assets/rhcos/rhcos-live-kernel-ppc64le
+    dest: /var/lib/tftpboot/rhcos-live-kernel-ppc64le
+    remote_src: yes
+
+- name: Copy initramfs
+  copy:
+    src: /root/assets/rhcos/rhcos-live-initramfs.ppc64le.img
+    dest: /var/lib/tftpboot/rhcos-live-initramfs.ppc64le.img
+    remote_src: yes
+
+- name: Create grub configuration
+  template:
+    src: grub.cfg.j2
+    dest: /var/lib/tftpboot/boot/grub2/grub.cfg
+    owner: root
+    group: root
+    mode: '0644'
+
+

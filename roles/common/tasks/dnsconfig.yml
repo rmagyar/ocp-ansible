@@ -1,0 +1,56 @@
+---
+
+- name: Creating /etc/dnsmasq.d/ocpdns.conf
+  template:
+    src: ocpdns.conf.j2
+    dest: /etc/dnsmasq.d/ocpdns.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Delete lease file
+  file:
+    path: /var/lib/dnsmasq/dnsmasq.leases
+    state: absent
+
+- name: Create an empty lease file
+  file:
+    path: /var/lib/dnsmasq/dnsmasq.leases
+    state: touch
+  changed_when: true
+  notify: 
+    - Restart dnsmasq
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Check DNS entry for {{ bootstrap_hostname }}
+  command: nslookup "{{ bootstrap_hostname }}" 
+  register: nslookup
+
+- debug: var=nslookup.stdout
+
+- name: Check DNS entry for {{ master1_hostname }} 
+  command: nslookup "{{ master1_hostname }}" 
+  register: nslookup
+
+- debug: var=nslookup.stdout
+
+- name: Check DNS entry for {{ master2_hostname }}
+  command: nslookup "{{ master2_hostname }}" 
+  register: nslookup
+
+- debug: var=nslookup.stdout
+
+- name: Check DNS entry for {{ master3_hostname }}
+  command: nslookup "{{ master3_hostname }}" 
+  register: nslookup
+
+- debug: var=nslookup.stdout
+
+- name: Check DNS entry for {{ worker1_hostname }}
+  command: nslookup "{{ worker1_hostname }}" 
+  register: nslookup
+
+- debug: var=nslookup.stdout
+

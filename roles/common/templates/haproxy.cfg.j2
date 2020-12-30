@@ -1,0 +1,100 @@
+#------------------------------------------------------------------
+# Global settings
+#------------------------------------------------------------------
+global
+    log         127.0.0.1 local2
+
+    chroot      /var/lib/haproxy
+    pidfile     /var/run/haproxy.pid
+    maxconn     4000
+    user        haproxy
+    group       haproxy
+    daemon
+
+    # turn on stats unix socket
+    stats socket /var/lib/haproxy/stats
+
+#------------------------------------------------------------------
+# common defaults that all the 'listen' and 'backend' sections will
+# use if not designated in their block
+#------------------------------------------------------------------
+defaults
+    mode                    http
+    log                     global
+    option                  httplog
+    option                  dontlognull
+    option http-server-close
+    option                  redispatch
+    retries                 3
+    timeout http-request    10s
+    timeout queue           1m
+    timeout connect         10s
+    timeout client          1m
+    timeout server          1m
+    timeout http-keep-alive 10s
+    timeout check           10s
+    maxconn                 3000
+
+#------------------------------------------------------------------
+# main frontend which proxys to the backends
+#------------------------------------------------------------------
+frontend K8s-api
+    bind *:6443
+    option tcplog
+    mode tcp
+    default_backend     api-6443
+
+frontend Machine-config
+    bind *:22623
+    option tcplog
+    mode tcp
+    default_backend     config-22623
+
+frontend Ingress-http
+    bind *:80
+    option tcplog
+    mode tcp
+    default_backend http-80
+
+frontend Ingress-https
+    bind *:443
+    option tcplog
+    mode tcp
+    default_backend     https-443
+
+#------------------------------------------------------------------
+# backend
+#------------------------------------------------------------------
+backend api-6443
+    mode tcp
+    balance     roundrobin
+    option  ssl-hello-chk
+    server  en{{ env_number }}-bootstrap 172.16.2{{ env_number }}.12:6443 check
+    server  en{{ env_number }}-master-1 172.16.2{{ env_number }}.13:6443 check
+    server  en{{ env_number }}-master-2 172.16.2{{ env_number }}.14:6443 check
+    server  en{{ env_number }}-master-3 172.16.2{{ env_number }}.15:6443 check
+
+backend config-22623
+    mode tcp
+    balance     roundrobin
+    server  en{{ env_number }}-bootstrap 172.16.2{{ env_number }}.12:22623 check
+    server  en{{ env_number }}-master-1 172.16.2{{ env_number }}.13:22623 check
+    server  en{{ env_number }}-master-2 172.16.2{{ env_number }}.14:22623 check
+    server  en{{ env_number }}-master-3 172.16.2{{ env_number }}.15:22623 check
+
+backend http-80
+    mode tcp
+    balance     roundrobin
+    server  en{{ env_number }}-worker-1 172.16.2{{ env_number }}.16:80 check
+
+backend https-443
+    mode tcp
+    balance     source
+    option      ssl-hello-chk
+    server  en{{ env_number }}-worker-1 172.16.2{{ env_number }}.16:443 check
+
+frontend stats
+    bind *:8404
+    stats enable
+    stats uri /stats
+    stats refresh 10s 

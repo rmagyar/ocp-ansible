@@ -1,0 +1,69 @@
+apiVersion: v1
+baseDomain: lbs.intra.com
+compute:
+- hyperthreading: Enabled
+  name: worker
+  replicas: 0
+  architecture : ppc64le
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  replicas: 3
+  architecture : ppc64le
+metadata:
+  name: ocpX
+networking:
+  clusterNetworks:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  networkType: OpenShiftSDN
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  none: {}
+fips: false
+pullSecret: '{"auths":{"rhel-repo.iic.hu.ibm.com:5000":{"auth": "cmVndXNlcjpwYXNzdzByZA==" ,"email": "lbs@hu.ibm.com"}}}'
+sshKey: '{{ ssh_key }}'
+additionalTrustBundle: |
+  -----BEGIN CERTIFICATE-----
+  MIIF+zCCA+OgAwIBAgIJALMuOXWznCoiMA0GCSqGSIb3DQEBCwUAMIGTMQswCQYD
+  VQQGEwJIVTENMAsGA1UECAwEUGVzdDERMA8GA1UEBwwIQnVkYXBlc3QxDDAKBgNV
+  BAoMA0lCTTEMMAoGA1UECwwDTEJTMSEwHwYDVQQDDBhyaGVsLXJlcG8uaWljLmh1
+  LmlibS5jb20xIzAhBgkqhkiG9w0BCQEWFGFkbWluQGlpYy5odS5pYm0uY29tMB4X
+  DTIwMTEyNjA4NTMxMVoXDTMyMDIxMzA4NTMxMVowgZMxCzAJBgNVBAYTAkhVMQ0w
+  CwYDVQQIDARQZXN0MREwDwYDVQQHDAhCdWRhcGVzdDEMMAoGA1UECgwDSUJNMQww
+  CgYDVQQLDANMQlMxITAfBgNVBAMMGHJoZWwtcmVwby5paWMuaHUuaWJtLmNvbTEj
+  MCEGCSqGSIb3DQEJARYUYWRtaW5AaWljLmh1LmlibS5jb20wggIiMA0GCSqGSIb3
+  DQEBAQUAA4ICDwAwggIKAoICAQCpBG0kdzhH4DnJICc7PNsQXJTaduANQhYVod8p
+  T7ZQhV8t1LW/e64n+rNEogrdy2f9kxCDT6qvzQ1tXQT+mgQx5WmqaG5wvc8NO7X4
+  l0z7bdbDwm8nNz48Bk4DpsgsYJg3BOzZy//BO7EKv7Bt9weRo9wJqjmmanPMwSE1
+  emqbP38QPDEocpmN8xwa0rrPZnmjmZSqvYWVEY/wIZXtM+OlhGDlemVLe5rBnhGJ
+  YrdY9F/4u1T5wGg4hV76ojQXYRIxVCXE9uZY/6lmkPY+h6LqF7x4+PxFaEIWMahW
+  ibxfJmRiCsJC3IzbZEOhc3QSuiX83UwwjycZstD70qHmbVAv7K8YUOkQZhKOeopH
+  eZMB8OtuX39uhlJt839WLMmlE+uHIhPFkZhpE4duOfSMvBjEarQvkiK8jj3Ei9Qh
+  ncXMEhsuF0vXh2tAYf9IpYg344OA8QwveJM+QZ8pvSTkSNHGXHk0kQGPlKUdPrvX
+  XT50xy60fr56mTNB5V72vV/948DRwUEQMIWIvq9FGmwAP6lEkesavQsbNPKmABfm
+  1pTUwH2Ec99AANX/pQpB2Gtxht3wKLpqajMhZi/Skjzs39ReGJQrLSQ2NW4qdRP0
+  pQ+onUAcznA59YskUEWhdg5HT9y96cdmj7FvlE59TnWGTaZ6Ow8t+2ob1wo56Xeo
+  tfasxwIDAQABo1AwTjAdBgNVHQ4EFgQUqG48AiQgIkb0vg0gjRsEmekhTT8wHwYD
+  VR0jBBgwFoAUqG48AiQgIkb0vg0gjRsEmekhTT8wDAYDVR0TBAUwAwEB/zANBgkq
+  hkiG9w0BAQsFAAOCAgEAXd99DnRpTGMFxtkeAF9jKTA1ICvgTWCTyHkZfW5XOJbY
+  6X3pQP5S+IBErAZ00Lllt4k6kj/kiGsN+zXnv7c4Zf2uwdrN7QmATARofyBTLzUu
+  mK1yrRKJQ+E9Gj6VPFguAMsapLzxx4NJdxuyXhvTuc/iQstu4j1ZwYfqDtJRQra5
+  1yCPsmcfNP56C/jIMGvJY0jGQPZbm9xdU69lqfUyDCZVmCh+o2D2Bjdis0L7l5Ba
+  uMNC2map2Un/N6iD30vUM2D6zm8Fl2s7pmH8a8QEhiDJpJgLlAO/0w/gqDMsvJn4
+  bbmN2/fmgZdIPi0uVlnRnNFzitLz17kc9cawpMPXVyk9w96QPVHoqpcLOuTxxS/k
+  TS1ME74Qj2uGUvymy0P72wznibkVE1MxGY59Iiuo4ZHOgiZ28N8fpWXKxoDK/Liv
+  3ilaoN1mgtHcIEGf7DzFD1wcr9HuPsPQ89ug7WD3YSG/FWma64aqM0iOsSnI8KHk
+  i4RJxbkwjjbNOY9gy6a7vZ+IpIq3ZDia0QQmGAGjZs12M/qvWIDZlKRqd3mm72Rx
+  ReS51CzE+IN07SvwVRjytDRAVdlVRZK1t4I5c0r5A3zeUqVfeXRUaJGlxSy+8Kog
+  lzcujTGRiAGnrhfQQXDkv3P4xeriPTHyA/m6BQ9BgNIbACL1Jrv4cgx13eTZmzo=
+  -----END CERTIFICATE-----
+
+imageContentSources:
+- mirrors:
+  - rhel-repo.iic.hu.ibm.com:5000/ocp46
+  source: quay.io/openshift-release-dev/ocp-release
+- mirrors:
+  - rhel-repo.iic.hu.ibm.com:5000/ocp46
+  source: quay.io/openshift-release-dev/ocp-v4.0-art-dev

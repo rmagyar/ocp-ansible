@@ -1,0 +1,9 @@
+---
+
+- name: Checking {{ ansible_hostname }}
+  ping:
+  register: ping_result
+  
+- name: Ping result
+  debug:
+    var: ping_result.ping

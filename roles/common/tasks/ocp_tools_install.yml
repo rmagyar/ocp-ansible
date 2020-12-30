@@ -1,0 +1,40 @@
+---
+
+- name: Download openshift-installer
+  get_url:
+    url: http://rhel-repo.iic.hu.ibm.com/openshift/openshift-install-linux.tar.gz
+    dest: /tmp/openshift-install-linux.tar.gz
+    mode: '0644'
+
+- name: Download openshift-client
+  get_url:
+    url: http://rhel-repo.iic.hu.ibm.com/openshift/openshift-client-linux.tar.gz
+    dest: /tmp/openshift-client-linux.tar.gz
+    mode: '0644'
+
+- name: Extracting installer files
+  unarchive:
+    src: /tmp/openshift-install-linux.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Extrancing client files
+  unarchive:
+    src: /tmp/openshift-client-linux.tar.gz
+    dest: /usr/local/bin
+    remote_src: yes
+
+- name: Checking installer version
+  command: openshift-install version
+  register: inst_version
+
+- name: Show installer version
+  debug: var=inst_version.stdout_lines
+
+- name: Checking client version
+  command: oc version
+  register: client_version
+
+- name: Show client version
+  debug: var=client_version.stdout_lines
+

@@ -1,0 +1,30 @@
+---
+
+- name: Create bare-metal directory
+  file:
+    path: /root/bare-metal
+    state: directory
+    mode: '755'
+
+- name: Generate SSH key
+  openssh_keypair:
+    path: /root/.ssh/ocp_rsa
+    type: rsa
+    size: 4096
+    state: present
+    force: yes
+
+- name: Get SSH public key
+  fetch:
+    src: /root/.ssh/ocp_rsa.pub
+    dest: /tmp/ocp_rsa.pub
+    flat: yes
+
+- name: Copy install-config.yaml
+  vars: 
+    ssh_key: "{{ lookup('file', '/tmp/ocp_rsa.pub') }}"
+  template:
+    src: install-config.yaml.j2
+    dest: /root/bare-metal/install-config.yaml
+  
+

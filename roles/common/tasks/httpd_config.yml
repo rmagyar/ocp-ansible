@@ -1,0 +1,29 @@
+---
+
+- name: Install new httpd config
+  template:
+    src: httpd.conf.j2
+    dest: /etc/httpd/conf/httpd.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Creating a simple index.html
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+
+- name: Restarting httpd
+  debug:
+    msg: "Restarting httpd"
+  changed_when: true
+  notify: 
+  - Restart httpd
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Check httpd home page
+  uri:
+    url: http://{{ ansible_default_ipv4.address }}:8080
+    status_code: 200

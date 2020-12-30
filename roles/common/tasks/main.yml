@@ -1,0 +1,44 @@
+---
+  - name: Executing ping
+    import_tasks: ping.yml
+
+  # - name: Installing packages
+  #   import_tasks: swinstall.yml
+
+  # - name: Disable firewall
+  #   import_tasks: disable_firewall.yml
+
+  # - name: Disable SELinux
+  #   import_tasks: disable_selinux.yml
+
+  # - name: Update /etc/hosts
+  #   import_tasks: update_etc_hosts.yml
+
+  # - name: NetworkManager config
+  #   import_tasks: nmconfig.yml
+
+  # - name: Update resolv.conf
+  #   import_tasks: update_resolv_conf.yml
+    
+  # - name: DNS config
+  #   import_tasks: dnsconfig.yml
+    
+  # - name: HAProxy config
+  #   import_tasks: haproxy_config.yml
+
+  # - name: NTP config
+  #   import_tasks: ntpconfig.yml
+  
+  # - name: OCP tools install
+  #   import_tasks: ocp_tools_install.yml
+
+  # - name: httpd config
+  #   import_tasks: httpd_config.yml
+
+  # - name: Configure GRUB
+  #   import_tasks: grubconfig.yml
+
+  - name: OCP install
+    import_tasks: ocp_install.yml
+
+

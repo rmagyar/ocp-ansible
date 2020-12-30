@@ -1,0 +1,24 @@
+---
+
+- name: Creating /etc/haproxy/haproxy.cfg
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: '0644'
+  changed_when: true
+  notify: 
+    - Restart haproxy
+
+- name: Flush handlers
+  meta: flush_handlers
+
+- name: Check HAProxy status page
+  uri:
+    url: http://{{ ansible_default_ipv4.address }}:8404/stats
+    status_code: 200
+  
+- name: Show HAProxy status page URL.
+  debug:
+    msg: http://{{ ansible_default_ipv4.address }}:8404/stats

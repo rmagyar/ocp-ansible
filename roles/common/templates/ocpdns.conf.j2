@@ -1,0 +1,32 @@
+port=53
+domain-needed
+bogus-priv
+resolv-file=/etc/resolv.dnsmasq
+no-poll
+address=/apps.ocp{{ env_number }}.lbs.intra.com/172.16.2{{ env_number }}.11
+address=/etcd-0.ocp{{ env_number }}.lbs.intra.com/172.16.2{{ env_number }}.13
+address=/etcd-1.ocp{{ env_number }}.lbs.intra.com/172.16.2{{ env_number }}.14
+address=/etcd-2.ocp{{ env_number }}.lbs.intra.com/172.16.2{{ env_number }}.15
+no-dhcp-interface=eth0
+expand-hosts
+no-resolv
+server=10.103.0.2
+domain=ocp{{ env_number }}.lbs.intra.com
+dhcp-ignore=#known
+dhcp-range=172.16.2{{ env_number }}.1,172.16.2{{ env_number }}.100,255.255.255.0,12h
+dhcp-host={{ bootstrap_mac }},en{{ env_number }}-bootstrap,172.16.2{{ env_number }}.12
+dhcp-host={{ master1_mac }},en{{ env_number }}-master-1,172.16.2{{ env_number }}.13
+dhcp-host={{ master2_mac }},en{{ env_number }}-master-2,172.16.2{{ env_number }}.14
+dhcp-host={{ master3_mac }},en{{ env_number }}-master-3,172.16.2{{ env_number }}.15
+dhcp-host={{ worker1_mac }},en{{ env_number }}-worker-1,172.16.2{{ env_number }}.16
+dhcp-option=option:dns-server,172.16.2{{ env_number }}.11
+dhcp-leasefile=/var/lib/dnsmasq/dnsmasq.leases
+dhcp-boot=/var/lib/tftpboot/boot/grub2/powerpc-ieee1275/core.elf
+dhcp-option=42,0.0.0.0
+srv-host=_etcd-server-ssl._tcp.ocp{{ env_number }}.lbs.intra.com,etcd-0.ocp{{ env_number }}.lbs.intra.com,2380,0,10
+srv-host=_etcd-server-ssl._tcp.ocp{{ env_number }}.lbs.intra.com,etcd-1.ocp{{ env_number }}.lbs.intra.com,2380,0,10
+srv-host=_etcd-server-ssl._tcp.ocp{{ env_number }}.lbs.intra.com,etcd-2.ocp{{ env_number }}.lbs.intra.com,2380,0,10
+log-dhcp
+log-facility=/var/log/dnsmasq.log
+enable-tftp
+tftp-root=/var/lib/tftpboot

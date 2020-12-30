@@ -1,0 +1,19 @@
+---
+
+- name: Install packages
+  yum:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+    - tftp-server
+    - dnsmasq
+    - bind-utils
+    - haproxy
+    - wget
+    - tree
+    - sshpass
+    - httpd
+    - httpd-tools
+    - podman
+    - libselinux-python

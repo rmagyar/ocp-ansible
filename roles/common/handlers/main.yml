@@ -1,0 +1,26 @@
+---
+
+- name: Restart NetworkManager
+  systemd:
+    state: restarted
+    name: NetworkManager.service
+
+- name: Restart dnsmasq
+  systemd:
+    state: restarted
+    name: dnsmasq
+
+- name: Restart haproxy
+  systemd:
+    state: restarted
+    name: haproxy
+
+- name: Restart chronyd
+  systemd:
+    state: restarted
+    name: chronyd
+
+- name: Restart httpd
+  systemd:
+    state: restarted
+    name: httpd

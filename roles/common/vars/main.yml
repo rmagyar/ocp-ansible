@@ -1,0 +1,18 @@
+---
+
+# Environment config
+env_number: 1
+
+# Node hostnames
+bootstrap_hostname: en1-bootstrap
+master1_hostname: en1-master-1
+master2_hostname: en1-master-2
+master3_hostname: en1-master-3
+worker1_hostname: en1-worker-1
+
+# Node MAC addresses
+bootstrap_mac: fa:d9:69:2c:0f:20
+master1_mac: fa:30:c8:15:ba:20
+master2_mac: fa:f2:10:b8:4a:20
+master3_mac: fa:91:8a:54:69:20
+worker1_mac: fa:da:be:a6:83:20

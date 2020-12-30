@@ -1,0 +1,13 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+# OCP Nodes and other
+10.103.2{{ env_number }}.11 en{{ env_number }}-bastion.ocp{{ env_number }}.lbs.intra.com en{{ env_number }}-bastion
+172.16.2{{ env_number }}.12 en{{ env_number }}-bootstrap.ocp{{ env_number }}.lbs.intra.com en{{ env_number }}-bootstrap
+172.16.2{{ env_number }}.13 en{{ env_number }}-master-1.ocp{{ env_number }}.lbs.intra.com en{{ env_number }}-master-1
+172.16.2{{ env_number }}.14 en{{ env_number }}-master-2.ocp{{ env_number }}.lbs.intra.com en{{ env_number }}-master-2
+172.16.2{{ env_number }}.15 en{{ env_number }}-master-3.ocp{{ env_number }}.lbs.intra.com en{{ env_number }}-master-3
+172.16.2{{ env_number }}.16 en{{ env_number }}-worker-1.ocp{{ env_number }}.lbs.intra.com en{{ env_number }}-worker-1
+10.103.2{{ env_number }}.11 api
+172.16.2{{ env_number }}.11 api-int
+172.16.2{{ env_number }}.100 rhel-repo.iic.hu.ibm.com # local repository

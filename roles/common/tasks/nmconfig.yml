@@ -1,0 +1,15 @@
+---
+
+- name: Updating /etc/NetworkManager/NetworkManager.conf
+  template:
+    src: NetworkManager.conf.j2
+    dest: /etc/NetworkManager/NetworkManager.conf
+    owner: root
+    group: root
+    mode: '0644'
+  changed_when: true
+  notify: 
+  - Restart NetworkManager
+
+- name: Flush handlers
+  meta: flush_handlers

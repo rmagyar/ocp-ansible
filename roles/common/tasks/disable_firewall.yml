@@ -1,0 +1,11 @@
+---
+
+- name: Stopping firewall
+  systemd:
+    state: stopped
+    name: firewalld
+
+- name: Disable firewall
+  systemd:
+    masked: yes
+    name: firewalld 
