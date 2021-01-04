@@ -1,0 +1,24 @@
+--- master.json 2021-01-04 14:12:38.612166625 +0100
++++ master_patched.json 2021-01-04 15:19:29.075258599 +0100
+@@ -17,5 +17,21 @@
+       }
+     },
+     "version": "3.1.0"
++  },
++  "storage": {
++    "files": [
++      {
++        "filesystem": "root",
++        "path": "/etc/sysctl.d/88-sysctl.conf",
++        "user": {
++          "name": "root"
++        },
++        "contents": {
++          "source": "data:text/plain;charset=utf-8;base64,bmV0LmlwdjQudGNwX210dV9wcm9iaW5nID0gMQpuZXQuaXB2NC50Y3BfYmFzZV9tc3MgPSAxMDI0Cm5ldC5pcHY0LmlwX25vX3BtdHVfZGlzYz0xCm5ldC5pcHY0LnJvdXRlLm1pbl9wbXR1PTE0NTAKCg==",
++          "verification": {}
++        },
++        "mode": 420
++      }
++    ]
+   }
+ }

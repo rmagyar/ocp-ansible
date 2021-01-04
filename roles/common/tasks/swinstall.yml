@@ -17,3 +17,5 @@
     - httpd-tools
     - podman
     - libselinux-python
+    - /root/assets/jq/oniguruma-5.9.5-3.el7.ppc64le.rpm
+    - /root/assets/jq/jq-1.6-1.el7.ppc64le.rpm

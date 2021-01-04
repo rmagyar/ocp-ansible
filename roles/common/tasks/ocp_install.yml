@@ -27,4 +27,58 @@
     src: install-config.yaml.j2
     dest: /root/bare-metal/install-config.yaml
   
+- name: Generate ignition manifests
+  command: openshift-install create manifests --dir=bare-metal
+  args:
+    chdir: /root
+
+- name: Patch ignition manifests
+  replace:
+    path: /root/bare-metal/manifests/cluster-scheduler-02-config.yml
+    regexp: 'mastersSchedulable: true'
+    replace: 'mastersSchedulable: false'
+
+- name: Generate ignition configs
+  command: openshift-install create ignition-configs --dir=bare-metal
+  args:
+    chdir: /root
+
+- name: Convert master ignition file to json
+  shell: cat /root/bare-metal/master.ign | jq > /root/bare-metal/master.json
+
+- name: Convert worker ignition file to json
+  shell: cat /root/bare-metal/worker.ign | jq > /root/bare-metal/worker.json
+
+- name: Patching master ignition file
+  patch:
+    src: ignition.patch
+    remote_src: no
+    dest: /root/bare-metal/master.json
+
+- name: Patching worker ignition file
+  patch:
+    src: ignition.patch
+    remote_src: no
+    dest: /root/bare-metal/worker.json
+
+- name: Transfer bootstrap ignition config to www dir
+  copy:
+    src: /root/bare-metal/bootstrap.ign
+    dest: /var/www/html
+    remote_src: yes
+    mode: '0777'
+
+- name: Transfer master ignition config to www dir
+  copy:
+    src: /root/bare-metal/master.json
+    dest: /var/www/html/master.ign
+    remote_src: yes
+    mode: '0777'
+
+- name: Transfer worker ignition config to www dir
+  copy:
+    src: /root/bare-metal/worker.json
+    dest: /var/www/html/worker.json
+    remote_src: yes
+    mode: '0777'
 

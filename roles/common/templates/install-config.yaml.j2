@@ -11,7 +11,7 @@ controlPlane:
   replicas: 3
   architecture : ppc64le
 metadata:
-  name: ocpX
+  name: ocp{{ env_number }}
 networking:
   clusterNetworks:
   - cidr: 10.128.0.0/14
